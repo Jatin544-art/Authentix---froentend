@@ -100,7 +100,7 @@ function SignInView({ c }) {
         </button>
 
         <button
-          onClick={() => mockSignIn('github', { name: 'Jatin544',   email: 'jatin@github.com',  avatar: GITHUB_AVATAR,  provider: 'github' })}
+          onClick={() => mockSignIn('github', { name: 'Authentix-544',   email: 'jatin@github.com',  avatar: GITHUB_AVATAR,  provider: 'github' })}
           disabled={!!loading}
           className="w-full flex items-center justify-center gap-3 py-3 rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-[1.02] active:scale-95 disabled:opacity-60"
           style={{ background: '#24292e', border: `1px solid #444`, color: '#fff' }}

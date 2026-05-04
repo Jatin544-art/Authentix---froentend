@@ -75,4 +75,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Hide Spline Watermark */
+  #spline-container a,
+  #spline-container canvas + div,
+  #spline-container canvas + a {
+    display: none !important;
+  }
 }
+
