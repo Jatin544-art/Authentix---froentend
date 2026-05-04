@@ -1,13 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 export default function Header() {
   const location = useLocation()
+  const { user } = useAuth()
 
   const navLinks = [
     { label: 'Detect', to: '/detect' },
     { label: 'Dashboard', to: '/' },
-    { label: 'Heuristics', to: '/analysis' },
-    { label: 'History', to: '#' },
+    { label: 'Analysis', to: '/analysis' },
   ]
 
   return (
@@ -33,26 +34,52 @@ export default function Header() {
             ))}
           </nav>
         </div>
+
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex gap-3 text-zinc-400">
-            <button aria-label="settings" className="hover:text-violet-300 transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-zinc-800">
-              <span className="material-symbols-outlined text-xl">settings</span>
-            </button>
-            <button aria-label="notifications" className="hover:text-violet-300 transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-zinc-800">
-              <span className="material-symbols-outlined text-xl">notifications</span>
-            </button>
-          </div>
-          <Link
-            to="/detect"
-            className="bg-violet-500 text-white hover:bg-violet-400 transition-colors px-4 py-2 text-sm font-semibold rounded"
-          >
-            Get Started
-          </Link>
-          <img
-            alt="User profile"
-            className="w-8 h-8 rounded-full border border-zinc-700 object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWmh5HNIBRWOv2hgSWlpvlzMVr-Dg_JCAlQxmB5WlN1-exda5KUzYKaV6hhKXjMLMcMfUrfCLYwodo-KrRodmJAaWYDuVwsKYrb8QAbuxpOlGbw2aRcFKOmQXb2ABk6HXfeZ3Lj5RyBLSZm9cWoVMj-UNSiQ-ZlHjjKaacdbAQuf4DbXwukEvtTlSpOYmy7yDPQRmdtqy9X3MUwC0BAde_sAmTBzGrH5kIk6S_4yDeBqMnUJ7WBKDU5PCnUlzPPx3P4-nPr3aIRg"
-          />
+          {user ? (
+            /* Signed in — show avatar linking to profile */
+            <Link to="/profile" className="flex items-center gap-2 group">
+              <div className="relative">
+                <img
+                  alt={user.name}
+                  className="w-8 h-8 rounded-full border-2 object-cover transition-all group-hover:border-violet-400"
+                  style={{ borderColor: '#27272a' }}
+                  src={user.avatar}
+                />
+                <span
+                  className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                  style={{ background: '#34d399', borderColor: '#09090b' }}
+                />
+              </div>
+              <span className="hidden md:block text-xs font-medium text-zinc-300 group-hover:text-violet-300 transition-colors">
+                {user.name.split(' ')[0]}
+              </span>
+            </Link>
+          ) : (
+            /* Not signed in — sign in link + avatar placeholder */
+            <>
+              <Link
+                to="/profile"
+                className="hidden md:block text-sm font-medium text-zinc-400 hover:text-violet-300 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/detect"
+                className="bg-violet-500 text-white hover:bg-violet-400 transition-colors px-4 py-2 text-sm font-semibold rounded"
+              >
+                Get Started
+              </Link>
+              <Link to="/profile">
+                <div
+                  className="w-8 h-8 rounded-full border flex items-center justify-center transition-colors hover:border-violet-500"
+                  style={{ background: '#18181b', borderColor: '#27272a' }}
+                >
+                  <span className="material-symbols-outlined text-sm text-zinc-400">person</span>
+                </div>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
